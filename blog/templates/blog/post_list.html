@@ -1,33 +1,13 @@
-<html>
-    <h1>Oscars cool webpage</h1>
-    <h2>sub heading is h2</h2>
-    <h3>subsubheading h3</h3>
-    <body>
-        <p>Hello friend</p>
-    </body>
-    <em>emphasis here</em>
-    <br>
-    <strong>STRONG TEXT strong</strong>
-    <br>
-    <a href="https://www.google.com">google com</a>
-    <p>Paragraph time, I would like to talk about the time I went to the shops with my mum in this long paragrapg of text. It was a rainy tuesday and we were low on supplies. Due to this we had to go to the shops and we needed and umbrella due ot the rain. we bought things like milk and meats and metal. thank you for reading this story</p>
-</html>
-<html>
-<head>
-<title>Django Girls blog</title>
-</head>
-<body>
-<div>
-<h1><a href="/">Django Girls Blog</a></h1>
-</div>
-<div>
-    {% for post in posts %}
-    <div>
-        <p>published: {{ post.published_date }}</p>
-        <h2><a href="">{{ post.title }}</a></h2>
-        <p>{{ post.text|linebreaksbr }}</p>
-    </div>
-    {% endfor %}
+{%extends 'blog/base.html' %}
 
-</div>
-</body>
+{% block content %}
+                    {% for post in posts %}
+                        <div class="post">
+                            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+                            <div class="date">
+                                <p>published: {{ post.published_date }}</p>
+                            </div>
+                            <p>{{ post.text|linebreaksbr }}</p>
+                        </div>
+                    {% endfor %}
+{% endblock %}
