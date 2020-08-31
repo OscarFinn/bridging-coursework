@@ -14,31 +14,37 @@ def post_detail(request,pk):
     return render(request, 'blog/post_detail.html', {'post': post})
 
 def post_new(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('post_detail', pk=post.pk)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = PostForm(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.author = request.user
+                post.published_date = timezone.now()
+                post.save()
+                return redirect('post_detail', pk=post.pk)
+        else:
+            form = PostForm()
+        return render(request, 'blog/post_edit.html', {'form': form})
     else:
-        form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+        return redirect('/')
 
 def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('post_detail', pk=post.pk)
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post, pk=pk)
+        if request.method == "POST":
+            form = PostForm(request.POST, instance=post)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.author = request.user
+                post.published_date = timezone.now()
+                post.save()
+                return redirect('post_detail', pk=post.pk)
+        else:
+            form = PostForm(instance=post)
+        return render(request, 'blog/post_edit.html', {'form': form})
     else:
-        form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+        return redirect('/')
 
 def cv_edit(request):
     cv = get_object_or_404(CV)
@@ -53,49 +59,58 @@ def cv_edit(request):
     return render(request, 'blog/cv_edit.html', {'form': form})
 
 def work_new(request):
-    if request.method == "POST":
-        form = WorkForm(request.POST)
-        if form.is_valid():
-            work = form.save(commit=False)
-            work.save()
-            return redirect('new-work')
-    form = WorkForm()
-    workdisplay = WorkExperience.objects.all()
-    context = {
-        'form' : form,
-        'worktable' : workdisplay,
-    }
-    return render(request,"blog/work_edit.html",context)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = WorkForm(request.POST)
+            if form.is_valid():
+                work = form.save(commit=False)
+                work.save()
+                return redirect('new_work')
+        form = WorkForm()
+        workdisplay = WorkExperience.objects.all()
+        context = {
+            'form' : form,
+            'worktable' : workdisplay,
+        }
+        return render(request,"blog/work_edit.html",context)
+    else:
+        return redirect('cv')
 
 def skill_new(request):
-    if request.method == "POST":
-        form = SkillsForm(request.POST)
-        if form.is_valid():
-            skill = form.save(commit=False)
-            skill.save()
-            return redirect('new-skill')
-    form = SkillsForm()
-    skilldisplay = Skills.objects.all()
-    context = {
-        'form' : form,
-        'skilltable' : skilldisplay,
-    }
-    return render(request,"blog/new_skill.html",context)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = SkillsForm(request.POST)
+            if form.is_valid():
+                skill = form.save(commit=False)
+                skill.save()
+                return redirect('new_skill')
+        form = SkillsForm()
+        skilldisplay = Skills.objects.all()
+        context = {
+            'form' : form,
+            'skilltable' : skilldisplay,
+        }
+        return render(request,"blog/new_skill.html",context)
+    else:
+        return redirect('cv')
 
 def qual_new(request):
-    if request.method == "POST":
-        form = QualificationForm(request.POST)
-        if form.is_valid():
-            qual = form.save(commit=False)
-            qual.save()
-            return redirect('new-qual')
-    form = QualificationForm()
-    qualdisplay = Qualifications.objects.all()
-    context = {
-        'form' : form,
-        'qualtable' : qualdisplay,
-    }
-    return render(request,"blog/new_qual.html",context)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = QualificationForm(request.POST)
+            if form.is_valid():
+                qual = form.save(commit=False)
+                qual.save()
+                return redirect('new_qual')
+        form = QualificationForm()
+        qualdisplay = Qualifications.objects.all()
+        context = {
+            'form' : form,
+            'qualtable' : qualdisplay,
+        }
+        return render(request,"blog/new_qual.html",context)
+    else:
+        return redirect('cv')
 
 def view_cv(request):
     cv = get_object_or_404(CV)

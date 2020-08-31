@@ -8,7 +8,7 @@ urlpatterns = [
     path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
     path('cv/', views.view_cv, name ='cv'),
     path('cv/edit/', views.cv_edit, name = 'cv_edit'),
-    path('cv/new-work/', views.work_new, name = 'new-work'),
-    path('cv/new-skill/', views.skill_new, name = 'new-skill'),
-    path('cv/new-qual/',views.qual_new, name = 'new-qual'),
+    path('cv/new-work/', views.work_new, name = 'new_work'),
+    path('cv/new-skill/', views.skill_new, name = 'new_skill'),
+    path('cv/new-qual/',views.qual_new, name = 'new_qual'),
 ]

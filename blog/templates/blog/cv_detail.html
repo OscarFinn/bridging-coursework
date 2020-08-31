@@ -37,6 +37,9 @@
             </tr>  
             {% endfor %}
         </table>
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'new_work' %}"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
         <h3>Qualifications:</h3>
         <table>
             <tr><th>Qualification</th>
@@ -49,6 +52,9 @@
             </tr>  
             {% endfor %}
         </table>
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'new_qual' %}"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
         <h3>Skills:</h3>
         <table>
             <tr><th>Skill</th>
@@ -61,6 +67,9 @@
             </tr>  
             {% endfor %}
         </table>
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'new_skill' %}"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
     </div>
     <div>
         {% if cv.interests %}
