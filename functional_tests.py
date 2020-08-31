@@ -17,7 +17,8 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('ofinn', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('Oscar', header_text)
-        
+        #can i read blog posts
+        #how do i test for blog posts being available from a user pov?
         self.fail('finish the test!')
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

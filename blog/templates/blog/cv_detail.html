@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h2>Curriculum Vitae</h2>
+    <div>
+        <h3>
+            Contact Details:
+        </h3>
+        <p>
+            {% if cv.phone %}
+                Telephone No: {{ cv.phone }}
+            {%endif%}
+            {% if cv.email %}
+                <br>Email Address: {{ cv.email }}
+            {%endif%}
+        </p>
+    </div>
+    <div>
+        {% if cv.personal_profile %}
+            <h3>Profile</h3>
+            <p>{{ cv.personal_profile }}</p>
+        {% endif %}
+    </div>
+    <div>
+        {% if cv.interests %}
+            <h3>Interests</h3>
+            <p>{{ cv.interests }}</p>
+        {%endif%}
+    </div>
+{% endblock %}
