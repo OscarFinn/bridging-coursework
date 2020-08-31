@@ -26,7 +26,12 @@
     <div>
         <h3>Previous Work:</h3>
         <table>
-            <tr><th>Position</th>
+            <tr><th>
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-default" href="{% url 'new_work' %}"><span class="glyphicon glyphicon-plus"></span></a>
+                    {% endif %}
+                    Position
+                </th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Description</th>
@@ -40,12 +45,15 @@
             </tr>  
             {% endfor %}
         </table>
-        {% if user.is_authenticated %}
-            <a class="btn btn-default" href="{% url 'new_work' %}"><span class="glyphicon glyphicon-plus"></span></a>
-        {% endif %}
+
         <h3>Qualifications:</h3>
         <table>
-            <tr><th>Qualification</th>
+            <tr><th>        
+                {% if user.is_authenticated %}
+                    <a class="btn btn-default" href="{% url 'new_qual' %}"><span class="glyphicon glyphicon-plus"></span></a>
+                {% endif %}
+                Qualification
+                </th>
                 <th>Date Achieved</th>
             </tr>
             {% for result in qualtable %}
@@ -55,12 +63,15 @@
             </tr>  
             {% endfor %}
         </table>
-        {% if user.is_authenticated %}
-            <a class="btn btn-default" href="{% url 'new_qual' %}"><span class="glyphicon glyphicon-plus"></span></a>
-        {% endif %}
+
         <h3>Skills:</h3>
         <table>
-            <tr><th>Skill</th>
+            <tr><th>
+                {% if user.is_authenticated %}
+                    <a class="btn btn-default" href="{% url 'new_skill' %}"><span class="glyphicon glyphicon-plus"></span></a>
+                {% endif %}
+                Skill
+            </th>
                 <th>Proficiency</th>
             </tr>
             {% for result in skilltable %}
@@ -70,9 +81,7 @@
             </tr>  
             {% endfor %}
         </table>
-        {% if user.is_authenticated %}
-            <a class="btn btn-default" href="{% url 'new_skill' %}"><span class="glyphicon glyphicon-plus"></span></a>
-        {% endif %}
+
     </div>
     <div>
         {% if cv.interests %}
