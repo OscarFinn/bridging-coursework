@@ -76,6 +76,19 @@ def work_new(request):
     else:
         return redirect('cv')
 
+def work_edit(request, pk):
+    if request.user.is_authenticated:
+        work = get_object_or_404(WorkExperience, pk = pk)
+        if request.method == "POST":
+            form = WorkForm(request.POST, instance = work)
+            if form.is_valid():
+                work = form.save(commit=False)
+                work.save()
+                return redirect('new_work')
+        else:
+            form = WorkForm(instance = work)
+        return render(request, "blog/edit_work.html", {'form': form})
+
 def skill_new(request):
     if request.user.is_authenticated:
         if request.method == "POST":

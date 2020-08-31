@@ -13,11 +13,17 @@
             </tr>
             {% for result in worktable %}
             <tr>
-                <td>{{result.position}}</td>
+                <td>
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-default" href="{% url 'edit_work' pk=result.pk%}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    {% endif %}
+                 {{result.position}}
+                </td> 
                 <td>{{result.start_date}}</td>
                 <td>{{result.end_date}}</td>
                 <td>{{result.description}}</td>
             </tr>  
+            
             {% endfor %}
         </table>
     </div>
