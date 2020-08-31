@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <a href="{% url 'cv' %}">Return to CV</a>
+    <a href="{% url 'cv' %}">Back</a>
 
     <div>
         <h3>Skills:</h3>
@@ -12,7 +12,12 @@
             </tr>
             {% for result in skilltable %}
             <tr>
-                <td>{{result.skill}}</td>
+                <td>
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-default" href="{% url 'edit_skill' pk=result.pk%}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    {% endif %}
+                    {{result.skill}}
+                </td>
                 <td>{{result.proficiency}}</td>
             </tr>  
             {% endfor %}

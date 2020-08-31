@@ -10,7 +10,12 @@
             </tr>
             {% for result in qualtable %}
             <tr>
-                <td>{{result.qualification}}</td>
+                <td>
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-default" href="{% url 'edit_qual' pk=result.pk%}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    {% endif %}
+                    {{result.qualification}}
+                </td>
                 <td>{{result.date_achieved}}</td>
             </tr>  
             {% endfor %}

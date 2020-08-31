@@ -87,7 +87,7 @@ def work_edit(request, pk):
                 return redirect('new_work')
         else:
             form = WorkForm(instance = work)
-        return render(request, "blog/edit_work.html", {'form': form})
+        return render(request, "blog/cv_edit.html", {'form': form})
 
 def skill_new(request):
     if request.user.is_authenticated:
@@ -107,6 +107,20 @@ def skill_new(request):
     else:
         return redirect('cv')
 
+def skill_edit(request, pk):
+    if request.user.is_authenticated:
+        skill = get_object_or_404(Skills, pk = pk)
+        if request.method == "POST":
+            form = SkillsForm(request.POST, instance = skill)
+            if form.is_valid():
+                skill = form.save(commit=False)
+                skill.save()
+                return redirect('new_skill')
+        else:
+            form = SkillsForm(instance = skill)
+        return render(request, "blog/cv_edit.html", {'form': form})
+
+
 def qual_new(request):
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -124,6 +138,19 @@ def qual_new(request):
         return render(request,"blog/new_qual.html",context)
     else:
         return redirect('cv')
+
+def qual_edit(request, pk):
+    if request.user.is_authenticated:
+        qual = get_object_or_404(Qualifications, pk = pk)
+        if request.method == "POST":
+            form = QualificationForm(request.POST, instance = qual)
+            if form.is_valid():
+                qual = form.save(commit=False)
+                qual.save()
+                return redirect('new_qual')
+        else:
+            form = QualificationForm(instance = qual)
+        return render(request, "blog/cv_edit.html", {'form': form})
 
 def view_cv(request):
     cv = get_object_or_404(CV)

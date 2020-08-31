@@ -11,5 +11,7 @@ urlpatterns = [
     path('cv/work/', views.work_new, name = 'new_work'),
     path('cv/skill/', views.skill_new, name = 'new_skill'),
     path('cv/qual/',views.qual_new, name = 'new_qual'),
-    path('cv/work/<int:pk>/edit/', views.work_edit, name = 'edit_work')
+    path('cv/work/<int:pk>/edit/', views.work_edit, name = 'edit_work'),
+    path('cv/skill/<int:pk>/edit/', views.skill_edit, name = 'edit_skill'),
+    path('cv/qual/<int:pk>/edit/', views.qual_edit, name = 'edit_qual'),
 ]
