@@ -25,5 +25,45 @@
             <h3>Interests</h3>
             <p>{{ cv.interests }}</p>
         {%endif%}
+        <h3>Previous Work:</h3>
+        <table>
+            <tr><th>Position</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+            </tr>
+            {% for result in worktable %}
+            <tr>
+                <td>{{result.position}}</td>
+                <td>{{result.start_date}}</td>
+                <td>{{result.end_date}}</td>
+                <td>{{result.description}}</td>
+            </tr>  
+            {% endfor %}
+        </table>
+        <h3>Qualifications:</h3>
+        <table>
+            <tr><th>Qualification</th>
+                <th>Date Achieved</th>
+            </tr>
+            {% for result in qualtable %}
+            <tr>
+                <td>{{result.qualification}}</td>
+                <td>{{result.date_achieved}}</td>
+            </tr>  
+            {% endfor %}
+        </table>
+        <h3>Skills:</h3>
+        <table>
+            <tr><th>Skill</th>
+                <th>Proficiency</th>
+            </tr>
+            {% for result in skilltable %}
+            <tr>
+                <td>{{result.skill}}</td>
+                <td>{{result.proficiency}}</td>
+            </tr>  
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}
