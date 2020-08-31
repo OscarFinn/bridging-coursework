@@ -58,3 +58,8 @@ class HomePageTest(TestCase):
     def test_cv_returns_correct_html(self):
         response = self.client.get('/cv/')
         self.assertTemplateUsed(response, 'blog/cv_detail.html')
+
+    def test_cv_edit(self):
+        response = self.client.get('/cv/edit/')
+
+    #to-do edit cv(each section), assert cant edit unless logged in
