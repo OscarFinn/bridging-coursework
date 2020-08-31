@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.urls import resolve
 from django.test import TestCase
-from blog.views import post_list, post_detail, cv_detail, post_edit
+from blog.views import post_list, post_detail, view_cv, post_edit, cv_edit
 from .models import Post, CV
 from .forms import PostForm
+from django.test.client import Client
 
 # Create your tests here.
 class HomePageTest(TestCase):
@@ -27,7 +28,7 @@ class HomePageTest(TestCase):
 
     def test_post_create_and_edit(self):
         first_post = Post()
-        first_post.title = 'test post'
+        first_post.title = "test post"
         first_post.text = "text goes here"
         first_post.author = self.user
         first_post.save()
@@ -36,9 +37,14 @@ class HomePageTest(TestCase):
         self.assertContains(response, "test post")
         self.assertTemplateUsed(response, 'blog/post_detail.html')
         response = self.client.get('/post/1/edit/')
-        self.assertNotEqual(response.status_code, 404)
-        self.assertContains(response, "text goes here")
-        self.assertTemplateUsed(response, 'blog/post_edit.html')
+        self.assertEqual(response.status_code, 302)
+        #redirect because not logged in so log in
+        c = Client()
+        c.login(username=self.username,password=self.password)
+        response = self.client.get('/post/1/edit/', follow=True)
+        self.assertNotEqual(response.status_code,302)
+        #self.assertContains(response, "text goes here")
+        self.assertTemplateUsed('blog/post_edit.html')
 
     def test_404(self):
         response = self.client.get('/post/24/')
@@ -52,14 +58,19 @@ class HomePageTest(TestCase):
 
     #def test if view cv, edit cv, etc
     def test_cv_url_resolves_to_cv_page(self):
+        
         found = resolve('/cv/')
-        self.assertEqual(found.func, cv_detail)
+        self.assertEqual(found.func, view_cv)
 
     def test_cv_returns_correct_html(self):
         response = self.client.get('/cv/')
         self.assertTemplateUsed(response, 'blog/cv_detail.html')
 
     def test_cv_edit(self):
-        response = self.client.get('/cv/edit/')
+        c = Client()
+        c.login(username = self.username, password = self.password)
 
+        response = self.client.get('/cv/edit/')
+        self.assertTemplateUsed(response, 'blog/cv_edit.html')
+        
     #to-do edit cv(each section), assert cant edit unless logged in
