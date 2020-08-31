@@ -21,10 +21,6 @@
         {% endif %}
     </div>
     <div>
-        {% if cv.interests %}
-            <h3>Interests</h3>
-            <p>{{ cv.interests }}</p>
-        {%endif%}
         <h3>Previous Work:</h3>
         <table>
             <tr><th>Position</th>
@@ -65,5 +61,11 @@
             </tr>  
             {% endfor %}
         </table>
+    </div>
+    <div>
+        {% if cv.interests %}
+            <h3>Interests</h3>
+            <p>{{ cv.interests }}</p>
+        {%endif%}
     </div>
 {% endblock %}

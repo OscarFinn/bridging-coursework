@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div>
+        <h3>Skills:</h3>
+        <table>
+            <tr><th>Skill</th>
+                <th>Proficiency</th>
+            </tr>
+            {% for result in skilltable %}
+            <tr>
+                <td>{{result.skill}}</td>
+                <td>{{result.proficiency}}</td>
+            </tr>  
+            {% endfor %}
+        </table>
+    </div>
+    <h2>Add Skill</h2>
+    <form method="POST" class = "post-form"> {% csrf_token %}
+        {{ form.as_table }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

@@ -1,7 +1,25 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <h2>New post</h2>
+    <div>
+        <h2>Previous Work:</h2>
+        <table>
+            <tr><th>Position</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+            </tr>
+            {% for result in worktable %}
+            <tr>
+                <td>{{result.position}}</td>
+                <td>{{result.start_date}}</td>
+                <td>{{result.end_date}}</td>
+                <td>{{result.description}}</td>
+            </tr>  
+            {% endfor %}
+        </table>
+    </div>
+    <h2>Add Job</h2>
     <form method="POST" class = "post-form"> {% csrf_token %}
         {{ form.as_table }}
         <button type="submit" class="save btn btn-default">Save</button>

@@ -40,13 +40,6 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
-def cv_detail(request):
-    cv = get_object_or_404(CV)
-    work_experience = WorkExperience.objects.all()
-    qualifications = get_object_or_404(Qualifications)
-    skills = get_object_or_404(Skills)
-    return render(request, 'blog/cv_detail.html', {'cv': cv, 'work' : work_experience})
-
 def cv_edit(request):
     cv = get_object_or_404(CV)
     if request.method == "POST":
@@ -59,10 +52,50 @@ def cv_edit(request):
          form = CVForm(instance = cv)
     return render(request, 'blog/cv_edit.html', {'form': form})
 
-def work_edit(request):
-    context={}
-    context['form']=WorkForm()
+def work_new(request):
+    if request.method == "POST":
+        form = WorkForm(request.POST)
+        if form.is_valid():
+            work = form.save(commit=False)
+            work.save()
+            return redirect('new-work')
+    form = WorkForm()
+    workdisplay = WorkExperience.objects.all()
+    context = {
+        'form' : form,
+        'worktable' : workdisplay,
+    }
     return render(request,"blog/work_edit.html",context)
+
+def skill_new(request):
+    if request.method == "POST":
+        form = SkillsForm(request.POST)
+        if form.is_valid():
+            skill = form.save(commit=False)
+            skill.save()
+            return redirect('new-skill')
+    form = SkillsForm()
+    skilldisplay = Skills.objects.all()
+    context = {
+        'form' : form,
+        'skilltable' : skilldisplay,
+    }
+    return render(request,"blog/new_skill.html",context)
+
+def qual_new(request):
+    if request.method == "POST":
+        form = QualificationForm(request.POST)
+        if form.is_valid():
+            qual = form.save(commit=False)
+            qual.save()
+            return redirect('new-qual')
+    form = QualificationForm()
+    qualdisplay = Qualifications.objects.all()
+    context = {
+        'form' : form,
+        'qualtable' : qualdisplay,
+    }
+    return render(request,"blog/new_qual.html",context)
 
 def view_cv(request):
     cv = get_object_or_404(CV)
@@ -71,6 +104,3 @@ def view_cv(request):
     skilldisplay = Skills.objects.all()
 
     return render(request,"blog/cv_detail.html",{"worktable": workdisplay,"qualtable":qualdisplay,"skilltable":skilldisplay, "cv":cv})
-
-#def cv_edit
-#def cv_detail

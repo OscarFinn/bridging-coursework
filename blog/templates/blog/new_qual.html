@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div>
+        <h3>Qualifications:</h3>
+        <table>
+            <tr><th>Qualification</th>
+                <th>Date Achieved</th>
+            </tr>
+            {% for result in qualtable %}
+            <tr>
+                <td>{{result.qualification}}</td>
+                <td>{{result.date_achieved}}</td>
+            </tr>  
+            {% endfor %}
+        </table>
+    </div>
+    <h2>Add Qualfication</h2>
+    <form method="POST" class = "post-form"> {% csrf_token %}
+        {{ form.as_table }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
